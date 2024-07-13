@@ -328,7 +328,7 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                     $conn = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpw);
                     $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                     $status = "Creating scheduled events";
-                    $sqlcleanupOldDeletedEvent = "SET GLOBAL event_scheduler = ON;
+                    $sqlcleanupOldDeletedEvent = " // "SET GLOBAL event_scheduler = ON;
                                                   CREATE EVENT IF NOT EXISTS cleanupOldDeleted
                                                   	ON SCHEDULE EVERY 1 DAY
                                                   DO

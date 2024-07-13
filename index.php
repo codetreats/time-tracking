@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 $title = 'Home';
 
 include "login/misc/pagehead.php";
@@ -18,8 +22,8 @@ if ($auth->isLoggedIn()) {
     <div class="col-lg-2"></div><div class="col-lg-8">
     <h2>Menu Items:</h2>
 
-    <p><b><em>Edit Profile</em></b> - Edit your own user profile information including your name, contact info, avatar, etc</p>
-    <p><b><em>Account Settings</em></b> - Change your email address and/or password</p>';
+    <p><b><em>Profile</em></b> - Profileinstellungen</p>
+    <p><b><em>Account</em></b> - Passwort ändern</p>';
 
     if ($auth->isAdmin()) {
         echo '<p><b><em>Manage Active Users</em></b> - Admin manage active users and/or ban trolls</p>';

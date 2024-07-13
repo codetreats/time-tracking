@@ -218,7 +218,7 @@ CREATE TABLE `cookies` (
   CONSTRAINT `userid` FOREIGN KEY (`userid`) REFERENCES `members` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-SET GLOBAL event_scheduler = ON;
+-- SET GLOBAL event_scheduler = ON;
 
 /*!50106 DROP EVENT IF EXISTS `cleanupOldDeleted` */;
 DELIMITER ;;
