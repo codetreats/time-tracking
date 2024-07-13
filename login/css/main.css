@@ -224,3 +224,66 @@ tr:not(.checkedrow):hover {
     top: 25%;
     overflow-y: auto;
 }
+
+table.tracking {
+    width: 80%;
+    border:none;
+}
+
+table.tracking tr {
+       border:none;
+}
+
+table.tracking td {
+       border:none;
+}
+
+table.tracking th {
+    border:none;
+    border-bottom:solid;    
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: left;
+}
+
+.sum {
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+.year {
+    padding: 20px;
+    margin:20px;
+    background-color: lightgrey;
+    border-radius: 15px;
+}
+
+.month {
+    padding: 20px;
+    margin:20px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+hr {
+    border: solid;
+}
+
+.track_time {
+    padding: 20px;
+    margin:20px;
+    background-color: lightgrey;
+    border-radius: 15px;
+}
+
+.tracking_outer {
+    padding: 20px;
+    margin:20px;
+    background-color: lightgrey;
+    border-radius: 15px;
+}

@@ -21,7 +21,7 @@ try {
     $auth = new PHPLogin\AuthorizationHandler;
     $conf = new PHPLogin\PageConstructor($auth);
     $i18nHandler = new PHPLogin\I18nHandler();
-    $i18n = $i18nHandler->build("de");
+    $i18n = $i18nHandler->build("default");
 
     if (!isset($_SESSION)) {
         session_start();

@@ -311,7 +311,8 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                                           (`id`, `name`, `description`, `required`, `default_role`)
                                           VALUES (1, 'Superadmin', 'Master administrator of site', 1, NULL),
                                           (2, 'Admin', 'Site administrator', 1, NULL),
-                                          (3, 'Standard User', 'Default site role for standard users', 1, 1);
+                                          (3, 'Standard User', 'Default site role for standard users', 1, 1),
+                                          (4, 'Accountant', 'Account with right to see tracking info of all members', 1, NULL);
                                       SET FOREIGN_KEY_CHECKS = 1;";
                     $conn->exec($sqlinsertroles);
 
@@ -328,8 +329,7 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                     $conn = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpw);
                     $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                     $status = "Creating scheduled events";
-                    $sqlcleanupOldDeletedEvent = " // "SET GLOBAL event_scheduler = ON;
-                                                  CREATE EVENT IF NOT EXISTS cleanupOldDeleted
+                    $sqlcleanupOldDeletedEvent = "CREATE EVENT IF NOT EXISTS cleanupOldDeleted
                                                   	ON SCHEDULE EVERY 1 DAY
                                                   DO
                                                   BEGIN
@@ -552,7 +552,8 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                                       (30, 'email_working','Mailer','false', 'hidden','Indicates if email settings are correct and can connect to a mail server', 1),
                                       (31, 'admin_email','Website','".$saemail."', 'text','Site administrator email address', 1),
                                       (32, 'timezone', 'Website', '".date_default_timezone_get()."', 'timezone', 'Server time zone', 1),
-                                      (33, 'token_validity','Security','24','number','Token validity in Hours (default 24 hours)','1');";
+                                      (33, 'token_validity','Security','24','number','Token validity in Hours (default 24 hours)','1'),
+                                      (34, 'default_payment','Bezahlung','0','number','Default Payment','1');";
                     $conn->exec($sqlappsettings);
 
                     $sqlpermissions = "REPLACE INTO `{$tblprefix}permissions` (`id`,`name`,`description`,`category`,`required`)
@@ -668,8 +669,60 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                       $failure = 1;
                       break 1;
                   }
-
             case 19:
+            try {
+                //Create Tracking Table
+                $conn = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpw);
+                $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                $status = "Creating tracking table";
+
+                $sqltracking = "CREATE TABLE {$tblprefix}tracking (
+                        id INT AUTO_INCREMENT,
+                        user_id char(23) NOT NULL,
+                        date DATE NOT NULL,
+                        start TIME NOT NULL,
+                        end TIME NOT NULL,
+                        payment FLOAT NOT NULL,
+                        description char(110) NOT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `fk_userid_idx` (`user_id`),
+                        CONSTRAINT `fk_userid_tracking` FOREIGN KEY (`user_id`) REFERENCES {$tblprefix}members (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                $conn->exec($sqltracking);
+
+                break 1;
+                sleep(0.5);
+            } catch (Exception $e) {
+                throw new Exception("Failed to create tracking table. " . $e->getMessage());
+                $failure = 1;
+                break 1;
+            }
+            case 20:
+                try {
+                    //Create Payment Table
+                    $conn = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpw);
+                    $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                    $status = "Creating payment table";
+    
+                    $sqlpayment = "CREATE TABLE {$tblprefix}payment (
+                            id INT AUTO_INCREMENT,
+                            user_id char(23) NOT NULL,
+                            payment FLOAT NOT NULL,
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `user_id_UNIQUE` (`user_id`),
+                            KEY `fk_userid_idx` (`user_id`),
+                            CONSTRAINT `fk_userid_payment` FOREIGN KEY (`user_id`) REFERENCES {$tblprefix}members (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                    $conn->exec($sqlpayment);
+    
+                    break 1;
+                    sleep(0.5);
+                } catch (Exception $e) {
+                    throw new Exception("Failed to create tracking table. " . $e->getMessage());
+                    $failure = 1;
+                    break 1;
+                }
+            case 21:
                 try {
                     //Create banned users
                     $conn = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpw);
@@ -696,11 +749,11 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                     break 1;
                 }
 
-            case 20:
+            case 22:
                 require "confgen.php";
                 break 1;
 
-            case 21:
+            case 23:
                 try {
                     //Change file permissions
                     $status = "Changing file permissions";
@@ -714,7 +767,7 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                     $failure = 1;
                     break 1;
                 }
-
+            
             default:
                 $i++;
                 break 1;

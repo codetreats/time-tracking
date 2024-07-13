@@ -1,6 +1,3 @@
-[![Project Status: Abandoned – Initial development has started, but there has not yet been a stable, usable release; the project has been abandoned and the author(s) do not intend on continuing development.](https://www.repostatus.org/badges/latest/abandoned.svg)](https://www.repostatus.org/#abandoned)
-
-
 PHP-Login
 =========
 **Version 3.1**
@@ -68,7 +65,7 @@ Installation
 ------------
 
 #### Clone the Repository
-	$ git clone https://github.com/therecluse26/PHP-Login.git
+	$ git clone https://github.com/codetreats/time-tracking.git
 
 #### Install necessary dependencies with `Composer`
 	$ composer install --no-dev

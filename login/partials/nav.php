@@ -22,6 +22,8 @@
     <?php
     // SIGN IN / USER SETTINGS BUTTON
     $auth = new PHPLogin\AuthorizationHandler;
+    $i18nHandler = new PHPLogin\I18nHandler();
+    $i18n = $i18nHandler->build("default");
 
     if (!is_array($barmenu)) {
         // If no menu array is specified as override, try to fallback on menu file
@@ -34,11 +36,13 @@
     if (is_array($barmenu)) {
         echo '<ul class="nav navbar-nav">';
 
-        foreach ($barmenu as $btn => $cfg) {
+
+        foreach ($barmenu as $title_id => $cfg) {
+            $title = $i18n[$title_id];
             $url = $cfg["url"];
             $role = $cfg["role"];
             if ($auth->hasRole($role)) {
-                echo "<li><a href=\"" . (PHPLogin\MiscFunctions::isAbsUrl($url) ? $url : $this->base_url . '/' . $url) . "\">$btn</a></li>";
+                echo "<li><a href=\"" . (PHPLogin\MiscFunctions::isAbsUrl($url) ? $url : $this->base_url . '/' . $url) . "\">$title</a></li>";
             }
         }
 

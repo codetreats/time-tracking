@@ -156,7 +156,7 @@ if ($serveruser != $fileowner) {
             <div class="modal-body">
                 <div class="container">
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" data-dismiss="modal">Automated - Not Recommended</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" data-dismiss="modal">Automated</button>
                     </div>
                     <div class="col-md-6">
                         <form action="manual">

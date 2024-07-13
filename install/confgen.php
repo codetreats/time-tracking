@@ -25,6 +25,8 @@ try {
 \$tbl_member_jail = \$tbl_prefix.'member_jail';
 \$tbl_permissions = \$tbl_prefix.'permissions';
 \$tbl_role_permissions = \$tbl_prefix.'role_permissions';
+\$tbl_payment = \$tbl_prefix.'payment';
+\$tbl_tracking = \$tbl_prefix.'tracking';
 EOD;
 
     fwrite($dbconf_file, $dbconf_text);

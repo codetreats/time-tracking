@@ -107,7 +107,16 @@ class DbConn
     * @var string
     */
     public $tbl_member_jail;
-
+    /**
+    * Table where banned users are stored
+    * @var string
+    */
+    public $tbl_payment;
+    /**
+    * Table where banned users are stored
+    * @var string
+    */
+    public $tbl_tracking;
     /**
      * Class constructor
      * Initializes PDO connection and sets object properties
@@ -135,6 +144,8 @@ class DbConn
         $this->tbl_member_jail = $tbl_member_jail;
         $this->tbl_permissions = $tbl_permissions;
         $this->tbl_role_permissions = $tbl_role_permissions;
+        $this->tbl_payment = $tbl_payment;
+        $this->tbl_tracking = $tbl_tracking;
 
         // Connect to server and select database
         try {

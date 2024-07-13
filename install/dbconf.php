@@ -18,3 +18,5 @@ $tbl_mail_log = $tbl_prefix."mail_log";
 $tbl_member_jail = $tbl_prefix."member_jail";
 $tbl_permissions = $tbl_prefix."permissions";
 $tbl_role_permissions = $tbl_prefix."role_permissions";
+$tbl_tracking = $tbl_prefix."tracking";
+$tbl_payment = $tbl_prefix."payment";
