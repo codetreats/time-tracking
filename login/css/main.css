@@ -307,7 +307,7 @@ tr:not(.checkedrow):hover {
 }
 
 
-/* Allgemeine Stile für das Formular */
+/* Allgemeine Stile für das Tracking-Formular */
 .track_time {
     max-width: 500px;
     margin: 0 auto;
@@ -334,7 +334,6 @@ tr:not(.checkedrow):hover {
 .track_time input[type="submit"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
@@ -361,6 +360,59 @@ tr:not(.checkedrow):hover {
     .track_time input[type="text"],
     .track_time select,
     .track_time input[type="submit"] {
+        padding: 8px;
+    }
+}
+
+/* Allgemeine Stile für das Selection Formular */
+.selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Abstand zwischen den Elementen */
+    align-items: center; /* Zentrieren der Elemente vertikal */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.selector label {
+    margin: 0 5px 0 10px;
+}
+
+.selector input[type="date"],
+.selector input[type="text"],
+.selector select,
+.selector input[type="submit"] {
+    padding: 10px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-width: 200px;
+}
+
+.selector input[type="submit"] {
+    background-color: #82225d;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.selector input[type="submit"]:hover {
+    background-color: #82225d;
+}
+
+/* Mobile Stile */
+@media (max-width: 600px) {
+    .selector {
+        padding: 15px;
+    }
+
+    .selector input[type="date"],
+    .selector input[type="text"],
+    .selector select,
+    .selector input[type="submit"] {
         padding: 8px;
     }
 }

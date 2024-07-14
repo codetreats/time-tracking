@@ -64,7 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $description = $_POST['description'] ?? $description;
 
         // Überprüfen, ob alle Felder ausgefüllt sind
-        $tracking = new TrackingData(-1, $uid, $date, $start, $end, $description, AppConfig::pullSetting('default_payment'));
+        $payment = $dbClient->getPayment($uid, AppConfig::pullSetting('default_payment'));
+        $tracking = new TrackingData(-1, $uid, $date, $start, $end, $description, $payment);
         if (!TrackingUtils::isInCurrentMonth($tracking->getDate())) {
             echo "<p class='error'>Es darf nur der aktuelle Monat verändert werden.</p>";
         } elseif($tracking->overlaps($monthOverview->getTrackingsOfMonthForUser(new DateTime(), $uid))) {

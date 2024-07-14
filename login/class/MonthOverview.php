@@ -24,7 +24,29 @@ class MonthOverview
         return $filtered;
     }
 
+    function getMonthSummary(DateTime $dateInMonth, string $userId): array {
+        $trackings = $this->getTrackingsOfMonthForUser($dateInMonth, $userId);
+        if (count($trackings) === 0) {
+            return array();
+        }
+        $totalTime = 0;
+        $totalMoney = 0;
+        foreach ($trackings as $tracking) {
+            $totalTime += $tracking->workingTime();
+            $totalMoney += round($tracking->payment(), 2);
+        }
+        $hours = floor($totalTime);
+        $minutes = 60 * ($totalTime - $hours);
+        $totalHours = sprintf('%02d:%02d', $hours, $minutes);
+        $totalMoney = number_format($totalMoney, 2);
+        return array("time" => $totalHours, "money" => $totalMoney);
+    }
+
     function getMonthOverview(DateTime $dateInMonth, string $userId, bool $withDelete = false): string {
+        $trackings = $this->getTrackingsOfMonthForUser($dateInMonth, $userId);
+        if (count($trackings) === 0) {
+            return "<p class='noentry'>Keine Einträge für diesen Monat.</p>";
+        }
         $rows = "";
         $deleteHeader = "";
         $deleteFooter = "";
@@ -35,7 +57,7 @@ class MonthOverview
 
         $totalTime = 0;
         $totalMoney = 0;
-        foreach ($this->getTrackingsOfMonthForUser($dateInMonth, $userId) as $tracking) {
+        foreach ($trackings as $tracking) {
             $date = $tracking->getDate()->format('d.m.Y');
             $start = $tracking->getStartDateTime()->format('H:i');
             $end = $tracking->getEndDateTime()->format('H:i');
