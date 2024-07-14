@@ -121,7 +121,7 @@ body {
     width: 100%;
 }
 
-label.error {
+.error {
     color: red;
     font-size: 8px;
 }
@@ -154,9 +154,13 @@ tr:not(.checkedrow):hover {
     margin-bottom: 10px;
 }
 
+.navbar {
+    font-size: x-large;
+}
+
 .navbar-brand { position: relative; z-index: 2; }
 
-.navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; }
+.navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto;}
 
 .navbar .navbar-collapse { position: relative; }
 .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 22px; }
@@ -225,65 +229,306 @@ tr:not(.checkedrow):hover {
     overflow-y: auto;
 }
 
-table.tracking {
-    width: 80%;
-    border:none;
-}
-
-table.tracking tr {
-       border:none;
-}
-
-table.tracking td {
-       border:none;
-}
-
-table.tracking th {
-    border:none;
-    border-bottom:solid;    
-}
-
-h1 {
-    text-align: center;
-}
-
-h2 {
-    text-align: left;
-}
-
 .sum {
     padding-top: 10px;
     font-weight: bold;
 }
 
-.year {
+/* Allgemeine Stile für die Tabelle */
+.month-overview-outer {
+    max-width: 98%;
+    overflow-x: auto;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.month-overview {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.month-overview th, .month-overview td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.month-overview th {
+    background-color: #82225d;
+    color: white;
+    font-weight: bold;
+}
+
+.month-overview tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.month-overview tbody tr:hover {
+    background-color: #ddd;
+}
+
+.month-overview td {
+    position: relative;
+}
+
+.month-overview .sum {
+    font-weight: bold;
+}
+
+/* Stile für die Löschen-Buttons */
+.month-overview button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.month-overview button img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Mobile Stile */
+@media (max-width: 600px) {
+    .month-overview th, .month-overview td {
+        padding: 8px;
+    }
+
+    .month-overview button img {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+
+/* Allgemeine Stile für das Formular */
+.track_time {
+    max-width: 500px;
+    margin: 0 auto;
     padding: 20px;
-    margin:20px;
-    background-color: lightgrey;
-    border-radius: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.track_time form {
+    display: flex;
+    flex-direction: column;
+}
+
+.track_time label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.track_time input[type="date"],
+.track_time input[type="text"],
+.track_time select,
+.track_time input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.track_time input[type="submit"] {
+    background-color: #82225d;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.track_time input[type="submit"]:hover {
+    background-color: #82225d;
+}
+
+/* Mobile Stile */
+@media (max-width: 600px) {
+    .track_time {
+        padding: 15px;
+    }
+
+    .track_time input[type="date"],
+    .track_time input[type="text"],
+    .track_time select,
+    .track_time input[type="submit"] {
+        padding: 8px;
+    }
+}
+
+/* Allgemeine Stile für Jahres- und Monatsübersicht */
+.year {
+    max-width: 98%;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    margin-left: 10px;
+}
+
+.year h2 {
+    text-align: center;
+    color: #82225d;
+    margin-bottom: 20px;
 }
 
 .month {
-    padding: 20px;
-    margin:20px;
+    margin-bottom: 20px;
+}
+
+.month h3 {
+    border: 1px solid #82225d;
+    color: #82225d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.noentry {
+    color: #555;
+    font-style: italic;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+}
+
+/* Stile für die Tabellen innerhalb der Monatsübersicht */
+.tracking {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.tracking th, .tracking td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.tracking th {
+    background-color: #82225d;
+    color: white;
+    font-weight: bold;
+}
+
+.tracking tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tracking tbody tr:hover {
+    background-color: #ddd;
+}
+
+.tracking .sum {
+    font-weight: bold;
+}
+
+/* Mobile Stile */
+@media (max-width: 600px) {
+    .year, .month {
+        padding: 8px;
+    }
+
+    .tracking th, .tracking td {
+        padding: 8px;
+    }
+}
+
+
+/* Allgemeine Stile für die Navbar */
+.navbar {
+    background-color: #82225d;
+    border: none;
+    border-radius: 0;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-nav > li > a {
+    color: white !important;
+    padding: 15px 20px;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    background-color: #82225d;
+    color: white !important;
+}
+
+/* Allgemeine Stile für die Navbar */
+.navbar {
+    background-color: #82225d;
+    border: none;
+    border-radius: 0;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-nav > li > a {
+    color: white !important;
+    padding: 15px 20px;
+}
+
+/* Dezente Stile für die Hauptmenü-Punkte als Buttons */
+.navbar-nav > li > a {
+    background-color: transparent;
+    color: white !important;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+    margin: 5px;
+}
+
+.navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
     background-color: white;
-    border-radius: 15px;
+    color: grey !important;
+    border: 2px solid #82225d;
 }
 
-hr {
-    border: solid;
+/* Mobile Stile */
+.navbar-toggle {
+    background-color: #82225d;
+    border: none;
 }
 
-.track_time {
-    padding: 20px;
-    margin:20px;
-    background-color: lightgrey;
-    border-radius: 15px;
+.navbar-toggle .icon-bar {
+    background-color: white;
 }
 
-.tracking_outer {
-    padding: 20px;
-    margin:20px;
-    background-color: lightgrey;
-    border-radius: 15px;
+.dropdown-menu {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
+
+.dropdown-menu > li > a {
+    color: #82225d !important;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: #82225d;
+    color: white !important;
+}
+

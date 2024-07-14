@@ -177,7 +177,7 @@ class DbConn
     * Prevents unserialization
     * @return void
     **/
-    private function __wakeup()
+    public function __wakeup()
     {
     }
 }

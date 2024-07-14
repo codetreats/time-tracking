@@ -11,6 +11,45 @@ namespace PHPLogin;
 */
 class AppConfig extends DbConn
 {
+    public $signin_url;
+    public $active_email;
+    public $active_msg;
+    public $admin_email;
+    public $admin_verify;
+    public $avatar_dir;
+    public $base_dir;
+    public $base_url;
+    public $cookie_expire_seconds;
+    public $curl_enabled;
+    public $default_payment;
+    public $email_working;
+    public $from_email;
+    public $from_name;
+    public $htmlhead;
+    public $jwt_secret;
+    public $login_timeout;
+    public $mail_port;
+    public $mail_pw;
+    public $mail_security;
+    public $mail_server;
+    public $mail_server_type;
+    public $mail_user;
+    public $mainlogo;
+    public $max_attempts;
+    public $password_min_length;
+    public $password_policy_enforce;
+    public $reset_email;
+    public $signup_requires_admin;
+    public $signup_thanks;
+    public $site_name;
+    public $timezone;
+    public $token_validity;
+    public $verify_email_admin;
+    public $verify_email_noadmin;
+
+
+
+
     /**
      * Class constructor
      *
@@ -28,10 +67,45 @@ class AppConfig extends DbConn
 
         //Pulls all properties from database
         foreach ($settings as $key => $value) {
-            $this->{$key} = $value;
+            //$this->{$key} = $value;
         }
 
         $this->signin_url = $settings['base_url'].'/login';
+
+        $this->active_email = $settings['active_email'];
+        $this->active_msg = $settings['active_msg'];
+        $this->admin_email = $settings['admin_email'];
+        $this->admin_verify = $settings['admin_verify'];
+        $this->avatar_dir = $settings['avatar_dir'];
+        $this->base_dir = $settings['base_dir'];
+        $this->base_url = $settings['base_url'];
+        $this->cookie_expire_seconds = $settings['cookie_expire_seconds'];
+        $this->curl_enabled = $settings['curl_enabled'];
+        $this->default_payment = $settings['default_payment'];
+        $this->email_working = $settings['email_working'];
+        $this->from_email = $settings['from_email'];
+        $this->from_name = $settings['from_name'];
+        $this->htmlhead = $settings['htmlhead'];
+        $this->jwt_secret = $settings['jwt_secret'];
+        $this->login_timeout = $settings['login_timeout'];
+        $this->mail_port = $settings['mail_port'];
+        $this->mail_pw = $settings['mail_pw'];
+        $this->mail_security = $settings['mail_security'];
+        $this->mail_server = $settings['mail_server'];
+        $this->mail_server_type = $settings['mail_server_type'];
+        $this->mail_user = $settings['mail_user'];
+        $this->mainlogo = $settings['mainlogo'];
+        $this->max_attempts = $settings['max_attempts'];
+        $this->password_min_length = $settings['password_min_length'];
+        $this->password_policy_enforce = $settings['password_policy_enforce'];
+        $this->reset_email = $settings['reset_email'];
+        $this->signup_requires_admin = $settings['signup_requires_admin'];
+        $this->signup_thanks = $settings['signup_thanks'];
+        $this->site_name = $settings['site_name'];
+        $this->timezone = $settings['timezone'];
+        $this->token_validity = $settings['token_validity'];
+        $this->verify_email_admin = $settings['verify_email_admin'];
+        $this->verify_email_noadmin = $settings['verify_email_noadmin'];
 
         if ($this->from_email == '') {
             $this->from_email = $this->admin_email;

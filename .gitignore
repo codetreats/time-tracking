@@ -17,3 +17,4 @@ test/
 phinx.yml
 migrations.yml
 .keystore
+.idea
