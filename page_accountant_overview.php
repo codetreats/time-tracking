@@ -64,7 +64,8 @@ $title = I18n::PAGENAME_OVERVIEW;
   $month = $_GET["month"] ?? "all";
   $monthHeader = "";
   $all_month = $month == "all" ? TrackingUtils::month() : array($month => TrackingUtils::month()[$month]);
-  foreach ($all_month  as $month) {
+  $month_class = $month == "all" ? "all-month" : "single-month";
+  foreach ($all_month as $month) {
       $monthHeader .= "<th>$month</th>";
   }
 
@@ -74,7 +75,7 @@ $title = I18n::PAGENAME_OVERVIEW;
 
     <div class="overview_container">
         <h2> <?php echo $year ?> </h2>
-        <table class="month-overview">
+        <table class="month-overview <?php echo $month_class ?>">
             <thead>
                 <tr>
                     <th></th>

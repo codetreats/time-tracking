@@ -583,3 +583,7 @@ h1 {
     color: white !important;
 }
 
+.single-month {
+    max-width: 400px;
+    margin-left: 0px;
+}
