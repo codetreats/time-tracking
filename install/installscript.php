@@ -312,7 +312,8 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                                           VALUES (1, 'Superadmin', 'Master administrator of site', 1, NULL),
                                           (2, 'Admin', 'Site administrator', 1, NULL),
                                           (3, 'Standard User', 'Default site role for standard users', 1, 1),
-                                          (4, 'Accountant', 'Account with right to see tracking info of all members', 1, NULL);
+                                          (4, 'Accountant', 'Account with right to see tracking info of all members', 1, NULL),
+                                          (5, 'Staff', 'Account with right to record trackings', 1, 1);
                                       SET FOREIGN_KEY_CHECKS = 1;";
                     $conn->exec($sqlinsertroles);
 

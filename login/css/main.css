@@ -260,7 +260,7 @@ tr:not(.checkedrow):hover {
 }
 
 .month-overview th {
-    background-color: #82225d;
+    background-color: #337AB7;
     color: white;
     font-weight: bold;
 }
@@ -340,14 +340,14 @@ tr:not(.checkedrow):hover {
 }
 
 .track_time input[type="submit"] {
-    background-color: #82225d;
+    background-color: #337AB7;
     color: white;
     cursor: pointer;
     border: none;
 }
 
 .track_time input[type="submit"]:hover {
-    background-color: #82225d;
+    background-color: #337AB7;
 }
 
 /* Mobile Stile */
@@ -393,14 +393,14 @@ tr:not(.checkedrow):hover {
 }
 
 .selector input[type="submit"] {
-    background-color: #82225d;
+    background-color: #337AB7;
     color: white;
     cursor: pointer;
     border: none;
 }
 
 .selector input[type="submit"]:hover {
-    background-color: #82225d;
+    background-color: #337AB7;
 }
 
 /* Mobile Stile */
@@ -434,7 +434,7 @@ h1 {
 
 .year h2 {
     text-align: center;
-    color: #82225d;
+    color: #337AB7;
     margin-bottom: 20px;
 }
 
@@ -443,8 +443,8 @@ h1 {
 }
 
 .month h3 {
-    border: 1px solid #82225d;
-    color: #82225d;
+    border: 1px solid #337AB7;
+    color: #337AB7;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -473,7 +473,7 @@ h1 {
 }
 
 .tracking th {
-    background-color: #82225d;
+    background-color: #337AB7;
     color: white;
     font-weight: bold;
 }
@@ -504,7 +504,7 @@ h1 {
 
 /* Allgemeine Stile für die Navbar */
 .navbar {
-    background-color: #82225d;
+    background-color: #337AB7;
     border: none;
     border-radius: 0;
 }
@@ -521,13 +521,13 @@ h1 {
 }
 
 .navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
-    background-color: #82225d;
+    background-color: #337AB7;
     color: white !important;
 }
 
 /* Allgemeine Stile für die Navbar */
 .navbar {
-    background-color: #82225d;
+    background-color: #337AB7;
     border: none;
     border-radius: 0;
 }
@@ -556,12 +556,12 @@ h1 {
 .navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
     background-color: white;
     color: grey !important;
-    border: 2px solid #82225d;
+    border: 2px solid #337AB7;
 }
 
 /* Mobile Stile */
 .navbar-toggle {
-    background-color: #82225d;
+    background-color: #337AB7;
     border: none;
 }
 
@@ -576,11 +576,11 @@ h1 {
 }
 
 .dropdown-menu > li > a {
-    color: #82225d !important;
+    color: #337AB7 !important;
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    background-color: #82225d;
+    background-color: #337AB7;
     color: white !important;
 }
 

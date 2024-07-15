@@ -1,15 +1,17 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
 $userrole = 'Standard User';
 $title = 'Edit Profile';
 require '../login/misc/pagehead.php';
 $uid = $_SESSION['uid'];
 $usr = PHPLogin\ProfileData::pullAllUserInfo($uid);
 //Outputs empty user image if no image exists
-if (@get_headers($usr['UserImage'])[0] == 'HTTP/1.1 404 Not Found' || $usr['UserImage'] == '') {
-    $imgpath = "no_user.jpg";
-} else {
-    $imgpath = $usr['UserImage'];
-}
+$imgpath = "no_user.jpg";
+
 ?>
 
 <script src="js/profileupdate.js"></script>

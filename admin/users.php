@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
 /**
 * Page that allows admins to verify or delete new (unverified) users
 **/
@@ -20,7 +24,9 @@ if (isset($_GET['f'])) {
 
 </head>
 <body>
+Working
   <?php require '../login/misc/pullnav.php'; ?>
+  Working
   <div class="container-fluid">
 
 

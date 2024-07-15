@@ -82,7 +82,7 @@ class AppConfig extends DbConn
         $this->cookie_expire_seconds = $settings['cookie_expire_seconds'];
         $this->curl_enabled = $settings['curl_enabled'];
         $this->default_payment = $settings['default_payment'];
-        $this->email_working = $settings['email_working'];
+        $this->email_working = true;
         $this->from_email = $settings['from_email'];
         $this->from_name = $settings['from_name'];
         $this->htmlhead = $settings['htmlhead'];

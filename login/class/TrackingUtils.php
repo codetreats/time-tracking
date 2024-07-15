@@ -6,6 +6,7 @@
 namespace PHPLogin;
 
 use \DateTime;
+use PHPLogin\DbClient;
 
 /**
  * Util functions for time tracking
@@ -84,5 +85,82 @@ class TrackingUtils extends AppConfig
             "11" => "November",
             "12" => "Dezember"
         );
+    }
+
+    static function currentYear() : String {
+        return (new DateTime())->format('Y');
+    }
+
+    static function toOption($key, $value, $selected) : string {
+        $selected = $selected ? " selected" : "";
+        return "<option value='$key' $selected>$value</option>";
+    }
+
+    static function userOptions($auth, $users, $selectedUser) : string {
+        $userOptions = "";
+        foreach ($users as $userId => $username) {
+            if ($auth->checkRole($userId, "Staff")) {
+                $userOptions .= self::toOption($userId, $username, $selectedUser == $userId);
+            }
+        }
+        return $userOptions;
+    }
+
+    static function yearOptions($years, $selectedYear) : string {
+        $yearOptions = "";
+        foreach ($years as $year) {
+            $yearOptions .= self::toOption($year, $year, $selectedYear == $year);
+        }
+        return $yearOptions;
+    }
+
+    static function monthOptions($selectedMonth) : string {
+        $monthOptions = self::toOption("all", "Alle", $selectedMonth == "all");;
+        foreach (self::month() as $month_nr => $month) {
+            $monthOptions .= self::toOption($month_nr, $month, $selectedMonth == $month_nr);
+        }
+        return $monthOptions;
+    }
+
+    static function selectionBlock(DbClient $dbClient, $auth, bool $withUser, bool $withYear, bool $withMonth = false) {
+        $all = $dbClient->getTrackings();
+        $years = self::distinctYears($all);
+        if (count($years) == 0) {
+            $years[] = self::currentYear();
+        }
+        $users = $dbClient->getUsers();
+        $result = "
+            <div class='selector details_selector'>
+            <form method='get'>
+            ";
+
+        if ($withYear) {
+            $result .= "
+                <label for='year'>Jahr:</label>
+                <select id='year' name='year' required onchange='reload()'>
+                    " . self::yearOptions($years, $_GET['year'] ?? $_POST['year'] ?? '') . "
+                </select>";
+        }
+        if ($withMonth) {
+            $result .= "
+                <label for='month'>Monat:</label>
+                <select id='month' name='month' required onchange='reload()'>
+                    " . self::monthOptions($_GET['month'] ?? $_POST['month'] ?? '') . "
+                </select>";
+        }
+        if ($withUser) {
+            $result .= "
+                <label for='user'>Mitarbeiter:</label>
+                <select id='user' name='user' required onchange='reload()'>
+                    " . self::userOptions($auth, $users,$_GET['user'] ?? $_POST['user'] ?? '') . "
+                </select>
+            ";
+        }
+        $result .= "
+            <input type='submit' value='Anzeigen'>
+        </form>
+        </div>
+        ";
+        return $result;
     }
 }

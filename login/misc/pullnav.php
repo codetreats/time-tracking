@@ -1,10 +1,10 @@
 <?php
 //Pulls navbar
 if (array_key_exists('username', $_SESSION)) {
-    $conf->pullNav($_SESSION['username']);
 
+    $conf->pullNav($_SESSION['username']);
     //Checks for proper mailer configuration. Only checks connection if email_working db entry is false
-    if ($conf->email_working == 'false') {
+    if (!$conf->email_working) {
         $mailtest = new PHPLogin\MailHandler;
 
         $mailresult = $mailtest->testMailSettings();

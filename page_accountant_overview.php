@@ -17,41 +17,31 @@ include "login/misc/pagehead.php";
 <script>
     function reload() {
         var yearBox = document.getElementById("year");
+        var monthBox = document.getElementById("month");
         var selectedYear = yearBox.options[yearBox.selectedIndex].value;
-        window.location.href = window.location.pathname + "?year=" + selectedYear;
+        var selectedMonth = monthBox.options[monthBox.selectedIndex].value;
+        window.location.href = window.location.pathname + "?year=" + selectedYear + "&month=" + selectedMonth;
     }
 </script>
 </head>
 <body>
   <?php require 'login/misc/pullnav.php';
   echo "<h1>$title</h1>";
-  function toOption($key, $value, $selected) : string {
-      $selected = $selected ? " selected" : "";
-      return "<option value='$key' $selected>$value</option>";
-  }
 
-  function yearOptions($years, $selectedYear) : string {
-      $yearOptions = "";
-      foreach ($years as $year) {
-          $yearOptions .= toOption($year, $year, $selectedYear == $year);
-      }
-      return $yearOptions;
-  }
-
-  function body(MonthOverview $monthOverview, $auth, $year, $users) : string {
+  function body(MonthOverview $monthOverview, $auth, $year, $all_month, $users) : string {
       $rows = "";
       foreach ($users as $userId => $username) {
-          if ($auth->checkRole($userId, "Standard User")) {
-              $rows .= row($monthOverview, $year, $userId, $username);
+          if ($auth->checkRole($userId, "Staff")) {
+              $rows .= row($monthOverview, $year, $all_month, $userId, $username);
           }
       }
       return $rows;
   }
 
-  function row(MonthOverview $monthOverview, $year, $userId, $username) : string {
+  function row(MonthOverview $monthOverview, $year, $all_month, $userId, $username) : string {
         $row = "<tr>";
         $row .= "<td class='sum'>$username</td>";
-        foreach (TrackingUtils::month() as $month_nr => $monthName) {
+        foreach ($all_month as $month_nr => $monthName) {
             $date = TrackingUtils::dateFromYearAndMonth($year, $month_nr);
             $data = $monthOverview->getMonthSummary($date, $userId);
             if (count($data) != 0){
@@ -70,22 +60,18 @@ include "login/misc/pagehead.php";
   $all = $dbClient->getTrackings();
   $years = TrackingUtils::distinctYears($all);
   $users = $dbClient->getUsers();
-  $year = $_GET["year"] ?? $years[0];
+  $year = $_GET["year"] ?? TrackingUtils::currentYear();
+  $month = $_GET["month"] ?? "all";
   $monthHeader = "";
-  foreach (TrackingUtils::month() as $month) {
+  $all_month = $month == "all" ? TrackingUtils::month() : array($month => TrackingUtils::month()[$month]);
+  foreach ($all_month  as $month) {
       $monthHeader .= "<th>$month</th>";
   }
 
+  echo TrackingUtils::selectionBlock($dbClient, $auth, false, true, true);
+
   ?>
-    <div class="selector overview_selector">
-        <form method="get">
-            <label for="date">Jahr:</label>
-            <select id="year" name="year" required onchange="reload()">
-                <?php echo yearOptions($years,$_GET["year"] ?? "") ?>
-            </select>
-            <input type="submit" value="Anzeigen">
-        </form>
-    </div>
+
     <div class="overview_container">
         <h2> <?php echo $year ?> </h2>
         <table class="month-overview">
@@ -96,7 +82,7 @@ include "login/misc/pagehead.php";
                 </tr>
             </thead>
             <tbody>
-                <?php echo body($monthOverview, $auth, $year, $users); ?>
+                <?php echo body($monthOverview, $auth, $year, $all_month, $users); ?>
             </tbody>
         </table>
     </div>

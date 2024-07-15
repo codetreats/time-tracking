@@ -11,7 +11,7 @@ if ($auth->isLoggedIn()) {
     if ($auth->hasRole("Accountant")) {
         echo "<meta http-equiv='refresh' content='0; url=/page_accountant_overview.php' />";
     }
-    if ($auth->hasRole("Standard User")) {
+    if ($auth->hasRole("Staff")) {
         echo "<meta http-equiv='refresh' content='0; url=/page_user_track.php' />";
     }
 } else {

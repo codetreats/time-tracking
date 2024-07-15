@@ -13,6 +13,7 @@
         //Site main logo as link
         echo '<ul class="nav navbar-nav navbar-left"><li class="mainlogo"><a class="navbar-brand" href="'.$this->base_url.'"><img src="'.$this->mainlogo.'" height="36px"></a></li></ul>';
     }
+
     ?>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navbar-collapsed">
@@ -25,6 +26,8 @@
     $i18nHandler = new PHPLogin\I18nHandler();
     $i18n = $i18nHandler->build("default");
 
+
+
     if (!is_array($barmenu)) {
         // If no menu array is specified as override, try to fallback on menu file
         $menu_file = dirname(__FILE__) . "/barmenu.php";
@@ -32,6 +35,7 @@
             include $menu_file;
         }
     }
+
 
     if (is_array($barmenu)) {
         echo '<ul class="nav navbar-nav">';
@@ -51,6 +55,7 @@
 
     // Pulls either username or first/last name (if filled out)
     if ($auth->isLoggedIn()) {
+
         $usr = PHPLogin\ProfileData::pullUserFields($_SESSION['uid'], array('firstname', 'lastname'));
         if ((is_array($usr)) && (array_key_exists('firstname', $usr) && array_key_exists('lastname', $usr))) {
             $user = $usr['firstname']. ' ' .$usr['lastname'];
@@ -90,7 +95,7 @@
 
     <?php
     } else {
-            //User not logged in?>
+       //User not logged in?>
         <ul class="nav navbar-nav navbar-right">
         <li class="dropdown"><a href="<?php echo $this->base_url; ?>/login/index.php" role="button" aria-haspopup="false" aria-expanded="false">Sign In
         </a>

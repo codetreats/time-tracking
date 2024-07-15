@@ -11,7 +11,7 @@ use PHPLogin\DbClient;
 use PHPLogin\MonthOverview;
 
 $title = "Zeit erfassen";
-$userrole = "Standard User"; // Allow only logged in users
+$userrole = "Staff"; // Allow only logged in users
 include "login/misc/pagehead.php";
 ?>
 </head>
