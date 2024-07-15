@@ -5,8 +5,7 @@
 
 namespace PHPLogin;
 
-use \DateTime;
-use PHPLogin\DbClient;
+use DateTime;
 
 /**
  * Util functions for time tracking
@@ -72,18 +71,18 @@ class TrackingUtils extends AppConfig
 
     static function month() : array {
         return array(
-            "01" => "Januar",
-            "02" => "Februar",
-            "03" => "März",
-            "04" => "April",
-            "05" => "Mai",
-            "06" => "Juni",
-            "07" => "Juli",
-            "08" => "August",
-            "09" => "September",
-            "10" => "Oktober",
-            "11" => "November",
-            "12" => "Dezember"
+            "01" => I18n::MONTH_01,
+            "02" => I18n::MONTH_02,
+            "03" => I18n::MONTH_03,
+            "04" => I18n::MONTH_04,
+            "05" => I18n::MONTH_05,
+            "06" => I18n::MONTH_06,
+            "07" => I18n::MONTH_07,
+            "08" => I18n::MONTH_08,
+            "09" => I18n::MONTH_09,
+            "10" => I18n::MONTH_10,
+            "11" => I18n::MONTH_11,
+            "12" => I18n::MONTH_12
         );
     }
 
@@ -115,7 +114,7 @@ class TrackingUtils extends AppConfig
     }
 
     static function monthOptions($selectedMonth) : string {
-        $monthOptions = self::toOption("all", "Alle", $selectedMonth == "all");;
+        $monthOptions = self::toOption("all", I18n::COMMON_KEYWORD_ALL, $selectedMonth == "all");;
         foreach (self::month() as $month_nr => $month) {
             $monthOptions .= self::toOption($month_nr, $month, $selectedMonth == $month_nr);
         }
@@ -136,28 +135,28 @@ class TrackingUtils extends AppConfig
 
         if ($withYear) {
             $result .= "
-                <label for='year'>Jahr:</label>
+                <label for='year'>" . I18n::COMMON_KEYWORD_YEAR . "</label>
                 <select id='year' name='year' required onchange='reload()'>
                     " . self::yearOptions($years, $_GET['year'] ?? $_POST['year'] ?? '') . "
                 </select>";
         }
         if ($withMonth) {
             $result .= "
-                <label for='month'>Monat:</label>
+                <label for='month'>" . I18n::COMMON_KEYWORD_MONTH . "</label>
                 <select id='month' name='month' required onchange='reload()'>
                     " . self::monthOptions($_GET['month'] ?? $_POST['month'] ?? '') . "
                 </select>";
         }
         if ($withUser) {
             $result .= "
-                <label for='user'>Mitarbeiter:</label>
+                <label for='user'>" . I18n::COMMON_KEYWORD_STAFF . "</label>
                 <select id='user' name='user' required onchange='reload()'>
                     " . self::userOptions($auth, $users,$_GET['user'] ?? $_POST['user'] ?? '') . "
                 </select>
             ";
         }
         $result .= "
-            <input type='submit' value='Anzeigen'>
+            <input type='submit' value='" . I18n::COMMON_KEYWORD_SHOW . "'>
         </form>
         </div>
         ";

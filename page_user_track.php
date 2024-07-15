@@ -4,15 +4,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
-use PHPLogin\TrackingUtils;
-use PHPLogin\TrackingData;
 use PHPLogin\AppConfig;
 use PHPLogin\DbClient;
 use PHPLogin\MonthOverview;
+use PHPLogin\TrackingData;
+use PHPLogin\TrackingUtils;
+use PHPLogin\I18n;
 
-$title = "Zeit erfassen";
-$userrole = "Staff"; // Allow only logged in users
+$userrole = "Staff";
+
 include "login/misc/pagehead.php";
+$title = I18n::PAGENAME_TRACK;
 ?>
 </head>
 <body>
@@ -67,9 +69,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $payment = $dbClient->getPayment($uid, AppConfig::pullSetting('default_payment'));
         $tracking = new TrackingData(-1, $uid, $date, $start, $end, $description, $payment);
         if (!TrackingUtils::isInCurrentMonth($tracking->getDate())) {
-            echo "<p class='error'>Es darf nur der aktuelle Monat verändert werden.</p>";
+            echo "<p class='error'>" . I18n::ERROR_ONLY_CURRENT_MONTH . "</p>";
         } elseif($tracking->overlaps($monthOverview->getTrackingsOfMonthForUser(new DateTime(), $uid))) {
-            echo "<p class='error'>Für diesen Zeitraum gibt es schon einen Eintrag.</p>";
+            echo "<p class='error'>" . I18n::ERROR_OVERLAPPING_TRACKING . "</p>";
         } else {
             $dbClient->addTracking($tracking);
         }
@@ -78,21 +80,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   ?>
   <div class="track_time">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <label for="date">Datum:</label><br>
+        <label for="date"><?php echo I18n::PAGE_USER_TRACK_FORM_DATE ?></label><br>
         <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($date); ?>" required><br><br>
 
-        <label for="start">Startzeit (HH:MM):</label><br>
+        <label for="start"><?php echo I18n::PAGE_USER_TRACK_FORM_START ?></label><br>
         <select id="start" name="start" required>
             <?php echo generateTimeOptions($start); ?>
         </select><br><br>
 
-        <label for="end">Endzeit (HH:MM):</label><br>
+        <label for="end"><?php echo I18n::PAGE_USER_TRACK_FORM_END ?></label><br>
         <select id="end" name="end" required>
             <?php echo generateTimeOptions($end); ?>
         </select><br><br>
-        <label for="description">Beschreibung (max. 100 Zeichen - optional):</label><br>
+        <label for="description"><?php echo I18n::PAGE_USER_TRACK_FORM_DESCRIPTION ?></label><br>
         <input type="text" id="description" name="description" maxlength="100" value="<?php echo htmlspecialchars($description); ?>"><br><br>
-        <input type="submit" value="Eintragen">
+        <input type="submit" value="<?php echo I18n::PAGE_USER_TRACK_FORM_SUBMIT ?>">
     </form>
 </div>
   <div class='month-overview-outer'>

@@ -5,6 +5,7 @@
         </button>
 
     <?php
+    use PHPLogin\I18n;
     //SITE LOGO (IF SET) OR SITE NAME
     if (str_replace(' ', '', $this->mainlogo) == '') {
         //No logo, just renders site name as link
@@ -23,9 +24,6 @@
     <?php
     // SIGN IN / USER SETTINGS BUTTON
     $auth = new PHPLogin\AuthorizationHandler;
-    $i18nHandler = new PHPLogin\I18nHandler();
-    $i18n = $i18nHandler->build("default");
-
 
 
     if (!is_array($barmenu)) {
@@ -41,8 +39,7 @@
         echo '<ul class="nav navbar-nav">';
 
 
-        foreach ($barmenu as $title_id => $cfg) {
-            $title = $i18n[$title_id];
+        foreach ($barmenu as $title => $cfg) {
             $url = $cfg["url"];
             $role = $cfg["role"];
             if ($auth->hasRole($role)) {
@@ -70,25 +67,25 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a href="<?php echo $this->base_url; ?>/user/profileedit.php">Profil</a></li>
-                    <li><a href="<?php echo $this->base_url; ?>/user/accountedit.php">Account</a></li>
+                    <!-- <li><a href="<?php echo $this->base_url; ?>/user/profileedit.php">Profil</a></li> -->
+                    <li><a href="<?php echo $this->base_url; ?>/user/accountedit.php"><?php echo I18n::PAGENAME_ACCOUNT ?></a></li>
                     <li role="separator" class="divider"></li>
 
                     <!-- Superadmin Controls -->
                     <?php if ($auth->isSuperAdmin()): ?>
-                    <li><a href="<?php echo $this->base_url; ?>/admin/config.php">Seiteneinstellungen</a></li>
-                    <li><a href="<?php echo $this->base_url; ?>/admin/permissions.php">Berechtigungen</a></li>
+                    <li><a href="<?php echo $this->base_url; ?>/admin/config.php"><?php echo I18n::PAGENAME_PAGE_SETTINGS ?></a></li>
+                    <li><a href="<?php echo $this->base_url; ?>/admin/permissions.php"><?php echo I18n::PAGENAME_PERMISSIONS ?></a></li>
                     <li role="separator" class="divider"></li>
                     <?php endif; ?>
                     <!-- Admin Controls -->
                     <?php if ($auth->isAdmin()): ?>
-                    <li><a href="<?php echo $this->base_url; ?>/admin/users.php">Benutzer</a></li>
-                    <li><a href="<?php echo $this->base_url; ?>/admin/roles.php">Rollen</a></li>
-                    <li><a href="<?php echo $this->base_url; ?>/admin/mail.php">Mail Log</a></li>
+                    <li><a href="<?php echo $this->base_url; ?>/admin/users.php"><?php echo I18n::PAGENAME_USER ?></a></li>
+                    <li><a href="<?php echo $this->base_url; ?>/admin/roles.php"><?php echo I18n::PAGENAME_ROLE ?></a></li>
+                    <li><a href="<?php echo $this->base_url; ?>/admin/mail.php"><?php echo I18n::PAGENAME_MAIL_LOG ?></a></li>
                     <li role="separator" class="divider"></li>
                     <?php endif; ?>
 
-                    <li><a href="<?php echo $this->base_url; ?>/login/logout.php">Logout</a></li>
+                    <li><a href="<?php echo $this->base_url; ?>/login/logout.php"><?php echo I18n::PAGENAME_LOGOUT ?></a></li>
                 </ul>
             </li>
         </ul>
@@ -97,7 +94,7 @@
     } else {
        //User not logged in?>
         <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a href="<?php echo $this->base_url; ?>/login/index.php" role="button" aria-haspopup="false" aria-expanded="false">Sign In
+        <li class="dropdown"><a href="<?php echo $this->base_url; ?>/login/index.php" role="button" aria-haspopup="false" aria-expanded="false"><?php echo \PHPLogin\I18n::COMMON_KEYWORD_LOGIN ?>
         </a>
         </li>
         </ul>

@@ -4,12 +4,13 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 use PHPLogin\DbClient;
+use PHPLogin\I18n;
 use PHPLogin\MonthOverview;
 use PHPLogin\TrackingUtils;
 
-$title = "Archiv";
 $userrole = "Staff"; // Allow only logged in users
 include "login/misc/pagehead.php";
+$title = I18n::PAGENAME_ARCHIVE;
 
 ?>
 <script>

@@ -280,7 +280,7 @@ REPLACE INTO app_config (`sortorder`,`setting`,`category`,`value`,`type`,`descri
 
 SET FOREIGN_KEY_CHECKS= 0; REPLACE INTO `members` (id, username, password, email, verified, banned) values(@sa_id, @sa_user, @sa_password, @sa_email, 1, 0); SET FOREIGN_KEY_CHECKS= 1;
 
-SET FOREIGN_KEY_CHECKS = 0; REPLACE INTO `roles` (`id`, `name`, `description`, `required`, `default_role`) VALUES (1, 'Superadmin', 'Master administrator of site', 1, NULL), (2, 'Admin', 'Site administrator', 1, NULL), (3, 'Standard User', 'Default site role for standard users', 1, 1), (4, 'Accountant', 'Account with right to see tracking info of all members', 1, NULL), (5, 'Staff', 'Account with right to record trackings', 1, 1); SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 0; REPLACE INTO `roles` (`id`, `name`, `description`, `required`, `default_role`) VALUES (1, 'Superadmin', 'Master administrator of site', 1, NULL), (2, 'Admin', 'Site administrator', 1, NULL), (3, 'Standard User', 'Default site role for standard users', 1, 1), (4, 'Accountant', 'Account with right to see tracking info of all members', 1, NULL), (5, 'Staff', 'Account with right to record trackings', 1, NULL); SET FOREIGN_KEY_CHECKS = 1;
 
 SET FOREIGN_KEY_CHECKS = 0; REPLACE INTO `member_roles` (`id`, `member_id`, `role_id`) VALUES (1, @sa_id, 1); SET FOREIGN_KEY_CHECKS = 1;
 

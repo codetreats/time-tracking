@@ -9,10 +9,11 @@ try {
 
     if (!isset($userrole)) {
         $userrole = null;
+    }
 
-        if (!isset($title)) {
-            $title = 'Page';
-        }
+    if (!isset($title)) {
+        $script = $_SERVER['SCRIPT_NAME'];
+        $title = PHPLogin\I18n::TITLES[$script] ?? 'Page';
     }
 
     /**
@@ -20,8 +21,6 @@ try {
     **/
     $auth = new PHPLogin\AuthorizationHandler;
     $conf = new PHPLogin\PageConstructor($auth);
-    $i18nHandler = new PHPLogin\I18nHandler();
-    $i18n = $i18nHandler->build("default");
 
     if (!isset($_SESSION)) {
         session_start();

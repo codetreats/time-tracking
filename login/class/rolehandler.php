@@ -67,6 +67,24 @@ class RoleHandler extends DbConn
     }
 
     /**
+     * Returns the staff role for new user creation
+     *
+     * @return int
+     */
+    public static function getStaffRole(): int
+    {
+        $db = new DbConn;
+        $sql = "SELECT id FROM ".$db->tbl_roles."
+                    WHERE name = \"Staff\"";
+
+        $stmt = $db->conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+
+        return $result;
+    }
+
+    /**
     * Returns all roles
     *
     * @return array

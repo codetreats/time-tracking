@@ -4,15 +4,15 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
-use PHPLogin\TrackingUtils;
-use PHPLogin\TrackingData;
-use PHPLogin\AppConfig;
 use PHPLogin\DbClient;
+use PHPLogin\I18n;
 use PHPLogin\MonthOverview;
+use PHPLogin\TrackingUtils;
 
-$title = "Übersicht";
+
 $userrole = "Accountant"; // Allow only admins to access this page
 include "login/misc/pagehead.php";
+$title = I18n::PAGENAME_OVERVIEW;
 ?>
 <script>
     function reload() {
@@ -45,7 +45,7 @@ include "login/misc/pagehead.php";
             $date = TrackingUtils::dateFromYearAndMonth($year, $month_nr);
             $data = $monthOverview->getMonthSummary($date, $userId);
             if (count($data) != 0){
-                $row .= "<td>" . $data["time"] . " h<br>" . $data["money"] . " EUR </td>";
+                $row .= "<td>" . $data["time"] . " h<br>" . $data["money"] . " " . I18n::COMMON_KEYWORD_CURRENCY . "</td>";
             } else {
                 $row .= "<td> - </td>";
             }

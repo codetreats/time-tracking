@@ -4,15 +4,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
-use PHPLogin\TrackingUtils;
-use PHPLogin\TrackingData;
 use PHPLogin\AppConfig;
 use PHPLogin\DbClient;
-use PHPLogin\MonthOverview;
+use PHPLogin\I18n;
+use PHPLogin\TrackingUtils;
 
-$title = "Stundenlöhne";
 $userrole = "Accountant"; // Allow only admins to access this page
 include "login/misc/pagehead.php";
+$title = I18n::PAGENAME_PAYMENT;
 ?>
 <script>
     function reload() {
@@ -35,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["user"]) && isset($_POS
     $payment = $_POST["payment"];
     $username = $users[$user];
     $dbClient->updatePayment($_POST["user"], $payment);
-    echo "<p>Stundenlohn für $username wurde auf " . number_format($payment, 2) . " EUR gesetzt</p>";
+    echo "<p>" . I18n::PAGE_ACCOUNT_PAYMENT_HOURLY_FOR . " " . $username . ": " . number_format($payment, 2) . " " . I18n::COMMON_KEYWORD_CURRENCY . "</p>";
 }
 
 echo TrackingUtils::selectionBlock($dbClient, $auth, true, false);
@@ -46,14 +45,13 @@ if (isset($_GET["user"]) || isset($_POST["user"])) {
     $payment = $dbClient->getPayment($user, AppConfig::pullSetting('default_payment'));
     $url = $_SERVER["PHP_SELF"];
 
-    echo "
-    <h2>Stundenlohn für $username</h2>
+    echo "<h2>" . I18n::PAGE_ACCOUNT_PAYMENT_HOURLY_FOR . " $username</h2>
     <div class='update_payment'>
     <form action='$url' method='post'>
-        <label for='payment'>Stundenlohn:</label><br>
+        <label for='payment'>" . I18n::PAGE_ACCOUNT_PAYMENT_FORM_HOURLY . "</label><br>
         <input type='number' step='0.01' id='payment' name='payment'  value='$payment'><br><br>
         <input type='hidden' id='user' name='user' value='$user'>
-        <input type='submit' value='Speichern'>
+        <input type='submit' value='" . I18n::PAGE_ACCOUNT_PAYMENT_FORM_SAVE . "'>
     </form>
     </div>";
 }

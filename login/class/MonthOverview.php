@@ -45,7 +45,7 @@ class MonthOverview
     function getMonthOverview(DateTime $dateInMonth, string $userId, bool $withDelete = false): string {
         $trackings = $this->getTrackingsOfMonthForUser($dateInMonth, $userId);
         if (count($trackings) === 0) {
-            return "<p class='noentry'>Keine Einträge für diesen Monat.</p>";
+            return "<p class='noentry'>" . I18n::COMMON_MONTH_OVERVIEW_NO_ENTRIES . "</p>";
         }
         $rows = "";
         $deleteHeader = "";
@@ -69,7 +69,7 @@ class MonthOverview
             $rows .=  '<td>' . htmlspecialchars($start) . '</td>';
             $rows .=  '<td>' . htmlspecialchars($end) . '</td>';
             $rows .=  '<td>' . htmlspecialchars($tracking->workingTimeHumanReadable()) . '</td>';
-            $rows .=  '<td>' . htmlspecialchars(number_format($tracking->payment(), 2)) . ' EUR</td>';
+            $rows .=  '<td>' . htmlspecialchars(number_format($tracking->payment(), 2)) . ' ' . I18n::COMMON_KEYWORD_CURRENCY . '</td>';
             $rows .=  '<td>' . htmlspecialchars($tracking->description) . '</td>';
 
             if ($withDelete) {
@@ -90,18 +90,18 @@ class MonthOverview
                 <table class='month-overview' border='1'>
                 <thead>
                     <tr>
-                        <th>Datum</th>
-                        <th>Start</th>
-                        <th>Ende</th>
-                        <th>Arbeitszeit</th>
-                        <th>Bezahlung</th>
-                        <th>Beschreibung</th>
+                        <th>" . I18n::COMMON_MONTH_OVERVIEW_DATE . "</th>
+                        <th>" . I18n::COMMON_MONTH_OVERVIEW_START . "</th>
+                        <th>" . I18n::COMMON_MONTH_OVERVIEW_END . "</th>
+                        <th>" . I18n::COMMON_MONTH_OVERVIEW_WORKINGTIME . "</th>
+                        <th>" . I18n::COMMON_MONTH_OVERVIEW_EARNINGS . "</th>
+                        <th>" . I18n::COMMON_MONTH_OVERVIEW_DESCRIPTION . "</th>
                         $deleteHeader
                     </tr>
                 </thead>
                 <tbody>
                     $rows
-                    <tr><td></td><td></td><td class='sum'>$totalHours</td><td class='sum'>$totalMoney EUR</td><td></td><td></td>$deleteFooter</tr>
+                    <tr><td></td><td></td><td class='sum'>$totalHours</td><td class='sum'>$totalMoney " . I18n::COMMON_KEYWORD_CURRENCY . "</td><td></td><td></td>$deleteFooter</tr>
                 </tbody></table>
         ";
     }

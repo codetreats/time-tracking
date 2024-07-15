@@ -313,7 +313,7 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                                           (2, 'Admin', 'Site administrator', 1, NULL),
                                           (3, 'Standard User', 'Default site role for standard users', 1, 1),
                                           (4, 'Accountant', 'Account with right to see tracking info of all members', 1, NULL),
-                                          (5, 'Staff', 'Account with right to record trackings', 1, 1);
+                                          (5, 'Staff', 'Account with right to record trackings', 1, NULL);
                                       SET FOREIGN_KEY_CHECKS = 1;";
                     $conn->exec($sqlinsertroles);
 
@@ -542,7 +542,7 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                                       (9,'mail_user','Mailer','','email','Email user',1), (5,'mainlogo','Website','','url','URL of main site logo. Example \"http://sitename.com/logo.jpg\"',1),
                                       (17,'max_attempts','Security','5','number','Maximum login attempts',1),
                                       (16,'password_min_length','Security','6','number','Minimum password length if \"password_policy_enforce\" is set to true',1),
-                                      (15,'password_policy_enforce','Security','true','boolean','Require a mixture of upper and lowercase letters and minimum password length (set by \"password_min_length\")',1),
+                                      (15,'password_policy_enforce','Security','false','boolean','Require a mixture of upper and lowercase letters and minimum password length (set by \"password_min_length\")',1),
                                       (28,'reset_email','Messages','Click the link below to reset your password','text','Email message when user wants to reset their password',1),
                                       (23,'signup_requires_admin','Messages','Thank you for signing up! Before you can login, your account needs to be activated by an administrator.','text','Message displayed when user signs up, but requires admin approval',1),
                                       (22,'signup_thanks','Messages','Thank you for signing up! You will receive an email shortly confirming the verification of your account.','text','Message displayed wehn user signs up and can verify themselves via email',1),
