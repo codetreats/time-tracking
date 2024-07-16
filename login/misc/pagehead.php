@@ -6,6 +6,7 @@
 **/
 try {
     require dirname(dirname(__DIR__))."/vendor/autoload.php";
+    require dirname(dirname(__DIR__)) . "/i18n/_load.php";
 
     if (!isset($userrole)) {
         $userrole = null;
@@ -13,7 +14,7 @@ try {
 
     if (!isset($title)) {
         $script = $_SERVER['SCRIPT_NAME'];
-        $title = PHPLogin\I18n::TITLES[$script] ?? 'Page';
+        $title = i18n\I18n::TITLES[$script] ?? 'Page';
     }
 
     /**

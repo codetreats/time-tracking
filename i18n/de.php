@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPLogin;
+namespace i18n;
 
 /**
  * Handling for internationalization
@@ -93,7 +93,7 @@ class I18n
 
     public const PAGE_REGISTER_HINT = "";
 
-    public const PAGE_ACCOUNT_PAYMENT_FORM_SAVE = "Speichern:";
+    public const PAGE_ACCOUNT_PAYMENT_FORM_SAVE = "Speichern";
 
 
 

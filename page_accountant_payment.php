@@ -4,9 +4,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
+use i18n\I18n;
 use PHPLogin\AppConfig;
 use PHPLogin\DbClient;
-use PHPLogin\I18n;
 use PHPLogin\TrackingUtils;
 
 $userrole = "Accountant"; // Allow only admins to access this page

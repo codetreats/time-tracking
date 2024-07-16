@@ -6,6 +6,7 @@
 namespace PHPLogin;
 
 use DateTime;
+use i18n\I18n;
 
 /**
  * Util functions for time tracking

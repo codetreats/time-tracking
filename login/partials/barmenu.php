@@ -1,6 +1,6 @@
 <?php
 
-use PHPLogin\I18n;
+use i18n\I18n;
 
 // Define the buttons in the menu bar
 $barmenu = array(

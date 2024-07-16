@@ -5,7 +5,9 @@
         </button>
 
     <?php
-    use PHPLogin\I18n;
+
+    use i18n\I18n;
+
     //SITE LOGO (IF SET) OR SITE NAME
     if (str_replace(' ', '', $this->mainlogo) == '') {
         //No logo, just renders site name as link
@@ -94,7 +96,7 @@
     } else {
        //User not logged in?>
         <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a href="<?php echo $this->base_url; ?>/login/index.php" role="button" aria-haspopup="false" aria-expanded="false"><?php echo \PHPLogin\I18n::COMMON_KEYWORD_LOGIN ?>
+        <li class="dropdown"><a href="<?php echo $this->base_url; ?>/login/index.php" role="button" aria-haspopup="false" aria-expanded="false"><?php echo \i18n\I18n::COMMON_KEYWORD_LOGIN ?>
         </a>
         </li>
         </ul>

@@ -1,5 +1,6 @@
 <?php
-use PHPLogin\I18n;
+
+use i18n\I18n;
 
 $userrole = 'loginpage';
 include 'misc/pagehead.php';

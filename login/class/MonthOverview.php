@@ -2,7 +2,8 @@
 
 namespace PHPLogin;
 
-use \DateTime;
+use DateTime;
+use i18n\I18n;
 
 class MonthOverview
 {
