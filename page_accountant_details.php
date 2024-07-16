@@ -29,13 +29,15 @@ echo "<h1>$title</h1>";
 
 $dbClient = new DbClient();
 $monthOverview = new MonthOverview($dbClient);
+$users = $dbClient->getUsers();
 
 echo TrackingUtils::selectionBlock($dbClient, $auth, true, true);
 
 if (isset($_GET["year"]) && isset($_GET["user"])) {
     $year = $_GET["year"];
     $user = $_GET["user"];
-    echo "<h2>$year</h2>";
+
+    echo "<h2>$year - " . TrackingUtils::formatUsername($users[$user]) . "</h2>";
     foreach (TrackingUtils::month() as $month_nr => $month) {
         $date = TrackingUtils::dateFromYearAndMonth($year, $month_nr);
         echo "<h2>$month</h2>";

@@ -40,7 +40,7 @@ $title = I18n::PAGENAME_OVERVIEW;
 
   function row(MonthOverview $monthOverview, $year, $all_month, $userId, $username) : string {
         $row = "<tr>";
-        $row .= "<td class='sum'>$username</td>";
+        $row .= "<td class='sum'>" . TrackingUtils::formatUsername($username) . "</td>";
         foreach ($all_month as $month_nr => $monthName) {
             $date = TrackingUtils::dateFromYearAndMonth($year, $month_nr);
             $data = $monthOverview->getMonthSummary($date, $userId);

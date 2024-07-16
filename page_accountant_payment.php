@@ -45,7 +45,7 @@ if (isset($_GET["user"]) || isset($_POST["user"])) {
     $payment = $dbClient->getPayment($user, AppConfig::pullSetting('default_payment'));
     $url = $_SERVER["PHP_SELF"];
 
-    echo "<h2>" . I18n::PAGE_ACCOUNT_PAYMENT_HOURLY_FOR . " $username</h2>
+    echo "<h2>" . I18n::PAGE_ACCOUNT_PAYMENT_HOURLY_FOR . " " . TrackingUtils::formatUsername($username) . "</h2>
     <div class='update_payment'>
     <form action='$url' method='post'>
         <label for='payment'>" . I18n::PAGE_ACCOUNT_PAYMENT_FORM_HOURLY . "</label><br>

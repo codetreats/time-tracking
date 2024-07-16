@@ -91,6 +91,15 @@ class TrackingUtils extends AppConfig
         return (new DateTime())->format('Y');
     }
 
+    static function formatUsername($username) : string {
+        $formatted = "";
+        $parts = explode(".", $username);
+        foreach ($parts as $part) {
+            $formatted .= ucfirst($part) . ".";
+        }
+        return substr_replace($formatted, '', -1);
+    }
+
     static function toOption($key, $value, $selected) : string {
         $selected = $selected ? " selected" : "";
         return "<option value='$key' $selected>$value</option>";
@@ -100,7 +109,7 @@ class TrackingUtils extends AppConfig
         $userOptions = "";
         foreach ($users as $userId => $username) {
             if ($auth->checkRole($userId, "Staff")) {
-                $userOptions .= self::toOption($userId, $username, $selectedUser == $userId);
+                $userOptions .= self::toOption($userId, self::formatUsername($username), $selectedUser == $userId);
             }
         }
         return $userOptions;
