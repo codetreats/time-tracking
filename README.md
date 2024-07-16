@@ -37,3 +37,7 @@ Or change the salary of a user:
 
 Please refer to [Usage.md](USAGE.md)
 
+## Language
+
+You can switch the language by editing the file `i18n/_load.php`
+
