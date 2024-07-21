@@ -323,7 +323,7 @@ tr:not(.checkedrow):hover {
 }
 
 .track_time label {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     font-weight: bold;
 }
 
@@ -336,9 +336,11 @@ tr:not(.checkedrow):hover {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    margin-bottom: 15px;
 }
 
 .track_time input[type="submit"] {
+    margin-top: 15px;
     background-color: #337AB7;
     color: white;
     cursor: pointer;
@@ -590,4 +592,44 @@ h1 {
 
 .btn-primary {
     background-color: #337AB7;
+}
+
+.lock_button button {
+    padding: 10px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-width: 200px;
+    background-color: #337AB7;
+    color: white;
+    cursor: pointer;
+    border: none;
+
+}
+
+.lock_button button:hover {
+    background-color: #337AB7;
+
+}
+
+.checksum_match_inner  {
+    background: url("/login/images/match.svg") no-repeat center;
+    height: 40px;
+
+}
+
+.checksum_missmatch_inner {
+    background: url("/login/images/missmatch.svg") no-repeat center;
+    height: 40px;
+}
+
+.checksums td {
+    border-top: 5px solid #337AB7;
+    color: #337AB7;
+    font-weight: bold;
+}
+
+.all-month td {
+    min-width: 200px;
 }

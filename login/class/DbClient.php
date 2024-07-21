@@ -5,6 +5,7 @@
 namespace PHPLogin;
 
 use \PDO;
+use \DateTime;
 
 /**
  * Convenience functions for DB access
@@ -39,9 +40,23 @@ class DbClient extends AppConfig
             $stmt->bindParam(':description', $trackingData->description);
             $stmt->bindParam(':payment', $trackingData->payment);
             $stmt->execute();
-            //echo "<p>Tracking hinzugefügt: Datum: $date, Start: $start, Ende: $end, Beschreibung: $description, Bezahlung: $payment</p>";
         } catch (PDOException $e) {
             echo "Fehler[addTracking]: " . $e->getMessage();
+        }
+    }
+
+    public function addChecksum(String $year, String $month, String $checksum) {
+        try {
+            $sql = "INSERT INTO $this->tbl_checksums (created, year, month, checksum) VALUES (:created, :year, :month, :checksum)";
+            $stmt = $this->conn->prepare($sql);
+            $created = (new DateTime())->format('Y-m-d H:i:s');
+            $stmt->bindParam(':created', $created);
+            $stmt->bindParam(':year', $year, PDO::PARAM_INT);
+            $stmt->bindParam(':month', $month, PDO::PARAM_INT);
+            $stmt->bindParam(':checksum', $checksum, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Fehler[addChecksum]: " . $e->getMessage();
         }
     }
 
@@ -86,8 +101,30 @@ class DbClient extends AppConfig
             }
         } catch (\Throwable $e) {
             echo "Fehler[getPayment]: " . $e->getMessage();
+            throw $e;
         }
-        return $trackings;
+    }
+
+    public function getChecksum(string $year, string $month): ?String {
+        $trackings = [];
+        try {
+            $sql = "SELECT checksum FROM $this->tbl_checksums WHERE year = :year AND month = :month ORDER BY created DESC";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':year', $year, PDO::PARAM_INT);
+            $stmt->bindParam(':month', $month, PDO::PARAM_INT);
+
+            $stmt->execute();
+            $results = $stmt->fetchAll();
+
+            if (count($results) == 0) {
+                return null;
+            } else {
+                return $results[0]["checksum"];
+            }
+        } catch (\Throwable $e) {
+            echo "Fehler[getChecksum]: " . $e->getMessage();
+            throw $e;
+        }
     }
 
     public function updatePayment(string $user_id, float $payment) {

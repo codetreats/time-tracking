@@ -7,6 +7,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 use i18n\I18n;
 use PHPLogin\AppConfig;
 use PHPLogin\DbClient;
+use PHPLogin\LockingManager;
 use PHPLogin\MonthOverview;
 use PHPLogin\TrackingData;
 use PHPLogin\TrackingUtils;
@@ -16,6 +17,13 @@ $userrole = "Staff";
 include "login/misc/pagehead.php";
 $title = I18n::PAGENAME_TRACK;
 ?>
+<script>
+    function reload() {
+        var userBox = document.getElementById("user");
+        var selectedUser = userBox.options[userBox.selectedIndex].value;
+        window.location.href = window.location.pathname + "?user=" + selectedUser;
+    }
+</script>
 </head>
 <body>
   <?php require 'login/misc/pullnav.php';
@@ -23,6 +31,7 @@ echo "<h1>$title</h1>";
 $uid = $_SESSION["uid"];
 $dbClient = new DbClient();
 $monthOverview = new MonthOverview($dbClient);
+$lockingManager = new LockingManager();
 
 $currentMonth = (new DateTime())->format('m');
 $currentYear = (new DateTime())->format('Y');
@@ -56,7 +65,12 @@ $description = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["delete_id"])) {
         $id = $_POST["delete_id"];
-        if (isUserAllowedToDelete($monthOverview, $uid, $id)) {
+        $user = $uid;
+        if ($auth->isAdmin()) {
+            // Admin can delete for all users
+            $user = null;
+        }
+        if (isUserAllowedToDelete($monthOverview, $user, $id)) {
             $dbClient->deleteTracking($id);
         }
     } else {
@@ -67,38 +81,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Überprüfen, ob alle Felder ausgefüllt sind
         $payment = $dbClient->getPayment($uid, AppConfig::pullSetting('default_payment'));
-        $tracking = new TrackingData(-1, $uid, $date, $start, $end, $description, $payment);
-        if (!TrackingUtils::isInCurrentMonth($tracking->getDate())) {
-            echo "<p class='error'>" . I18n::ERROR_ONLY_CURRENT_MONTH . "</p>";
-        } elseif($tracking->overlaps($monthOverview->getTrackingsOfMonthForUser(new DateTime(), $uid))) {
-            echo "<p class='error'>" . I18n::ERROR_OVERLAPPING_TRACKING . "</p>";
+
+        if ($auth->isAdmin() && isset($_POST['user'])) {
+            $user = $_POST['user'];
+            $tracking = new TrackingData(-1, $user, $date, $start, $end, $description, $payment);
+            if ($lockingManager->isLocked($tracking->getDate())) {
+                echo "<p class='error'>" . I18n::ERROR_LOCKED . "</p>";
+            } elseif($tracking->overlaps($monthOverview->getTrackingsOfMonthForUser($tracking->getDate(), $user))) {
+                echo "<p class='error'>" . I18n::ERROR_OVERLAPPING_TRACKING . "</p>";
+            } else {
+                $dbClient->addTracking($tracking);
+            }
         } else {
-            $dbClient->addTracking($tracking);
+            $tracking = new TrackingData(-1, $uid, $date, $start, $end, $description, $payment);
+            if (!TrackingUtils::isInCurrentMonth($tracking->getDate())) {
+                echo "<p class='error'>" . I18n::ERROR_ONLY_CURRENT_MONTH . "</p>";
+            } elseif($tracking->overlaps($monthOverview->getTrackingsOfMonthForUser($tracking->getDate(), $uid))) {
+                echo "<p class='error'>" . I18n::ERROR_OVERLAPPING_TRACKING . "</p>";
+            } else {
+                $dbClient->addTracking($tracking);
+            }
         }
     }
 }
   ?>
   <div class="track_time">
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <label for="date"><?php echo I18n::PAGE_USER_TRACK_FORM_DATE ?></label><br>
-        <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($date); ?>" required><br><br>
+        <?php
+            if ($auth->isAdmin()) {
+                $users = $dbClient->getUsers();
+                echo "
+                        <label for='user'>" . I18n::COMMON_KEYWORD_STAFF . "</label>
+                        <select id='user' name='user' required onchange='reload()'>
+                            <option value=''>" . I18n::COMMON_KEYWORD_PLEASE_CHOICE . "</option>
+                            " . TrackingUtils::userOptions($auth, $users,$_GET['user'] ?? $_POST['user'] ?? '') . "
+                        </select>
+                ";
+            }
 
-        <label for="start"><?php echo I18n::PAGE_USER_TRACK_FORM_START ?></label><br>
+            ?>
+        <label for="date"><?php echo I18n::PAGE_USER_TRACK_FORM_DATE ?></label>
+        <input type="date" id="date" name="date" value="<?php echo htmlspecialchars($date); ?>" required>
+
+        <label for="start"><?php echo I18n::PAGE_USER_TRACK_FORM_START ?></label>
         <select id="start" name="start" required>
             <?php echo generateTimeOptions($start); ?>
-        </select><br><br>
+        </select>
 
-        <label for="end"><?php echo I18n::PAGE_USER_TRACK_FORM_END ?></label><br>
+        <label for="end"><?php echo I18n::PAGE_USER_TRACK_FORM_END ?></label>
         <select id="end" name="end" required>
             <?php echo generateTimeOptions($end); ?>
-        </select><br><br>
-        <label for="description"><?php echo I18n::PAGE_USER_TRACK_FORM_DESCRIPTION ?></label><br>
-        <input type="text" id="description" name="description" maxlength="100" value="<?php echo htmlspecialchars($description); ?>"><br><br>
+        </select>
+        <label for="description"><?php echo I18n::PAGE_USER_TRACK_FORM_DESCRIPTION ?></label>
+        <input type="text" id="description" name="description" maxlength="100" value="<?php echo htmlspecialchars($description); ?>">
         <input type="submit" value="<?php echo I18n::PAGE_USER_TRACK_FORM_SUBMIT ?>">
     </form>
 </div>
   <div class='month-overview-outer'>
-<?php echo $monthOverview->getMonthOverview(new DateTime(), $uid, true); ?>
+<?php
+$user = $_GET['user'] ?? $_POST['user'] ?? $uid;
+echo $monthOverview->getMonthOverview(new DateTime(), $user, true);
+?>
   </div>
 </body>
 </html>

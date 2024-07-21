@@ -71,6 +71,8 @@ class I18n
 
     public const COMMON_KEYWORD_STAFF = "Employee";
     public const COMMON_KEYWORD_SHOW = "Show";
+    public const COMMON_KEYWORD_LOCK = "Lock";
+    public const COMMON_KEYWORD_PLEASE_CHOICE = "Please choice";
     public const COMMON_MONTH_OVERVIEW_NO_ENTRIES = "No entries.";
     public const COMMON_MONTH_OVERVIEW_DATE = "Date";
     public const COMMON_MONTH_OVERVIEW_START = "Start";
@@ -81,6 +83,8 @@ class I18n
 
     public const ERROR_ONLY_CURRENT_MONTH = "You can only modify the current month.";
     public const ERROR_OVERLAPPING_TRACKING = "There are already entries for this month.";
+
+    public const ERROR_LOCKED = "Month is locked.";
     public const PAGE_USER_TRACK_FORM_DATE = "Date:";
     public const PAGE_USER_TRACK_FORM_START = "Start (HH:MM):";
     public const PAGE_USER_TRACK_FORM_END = "End (HH:MM):";
@@ -90,6 +94,8 @@ class I18n
     public const PAGE_ACCOUNT_PAYMENT_HOURLY_FOR = "New wage for ";
 
     public const PAGE_ACCOUNT_PAYMENT_FORM_HOURLY = "Wage:";
+
+    public const PAGE_ACCOUNT_OVERVIEW_LOCKING_ROW = "Verification";
 
     public const PAGE_REGISTER_HINT = "";
 

@@ -725,6 +725,27 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                 }
             case 21:
                 try {
+                    //Create Checksums Table
+                    $conn = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpw);
+                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $status = "Creating checksums table";
+
+                    $sql = "CREATE TABLE {$tblprefix}checksums (
+                        id INT AUTO_INCREMENT,
+                        created DATETIME NOT NULL,
+                        year INT(4) NOT NULL,
+                        month INT(2) NULL,
+                        checksum char(150) NOT NULL,
+                        PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                    $conn->exec($sql);
+
+                    echo "Table created successfully";
+                } catch (Exception $e) {
+                    throw new Exception("Failed to create checksums table. " . $e->getMessage());
+                }
+            case 22:
+                try {
                     //Create banned users
                     $conn = new PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpw);
                     $conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -750,11 +771,11 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                     break 1;
                 }
 
-            case 22:
+            case 23:
                 require "confgen.php";
                 break 1;
 
-            case 23:
+            case 24:
                 try {
                     //Change file permissions
                     $status = "Changing file permissions";

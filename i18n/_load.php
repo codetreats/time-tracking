@@ -1,5 +1,5 @@
 <?php
 
-require __DIR__ . "/en.php";
+require __DIR__ . "/de.php";
 
 ?>

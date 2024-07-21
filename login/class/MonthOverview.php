@@ -13,6 +13,10 @@ class MonthOverview
         $this->dbClient = $dbClient;
     }
 
+    function getTrackingsOfMonth($date): array {
+        return $this->getTrackingsOfMonthForUser($date, null);
+    }
+
     function getTrackingsOfMonthForUser($date, $uid): array
     {
         $all = $this->dbClient->getTrackings($uid);

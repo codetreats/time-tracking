@@ -27,6 +27,7 @@ try {
 \$tbl_role_permissions = \$tbl_prefix.'role_permissions';
 \$tbl_payment = \$tbl_prefix.'payment';
 \$tbl_tracking = \$tbl_prefix.'tracking';
+\$tbl_checksums = \$tbl_prefix.'checksums';
 EOD;
 
     fwrite($dbconf_file, $dbconf_text);

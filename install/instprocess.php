@@ -9,7 +9,7 @@ try {
 
     $resp = '';
     $failure = 0;
-    $total = 27;
+    $total = 28;
     $i = 0;
     $status = '';
 
@@ -33,12 +33,12 @@ try {
         if ($failure == 1) {
             break;
         } else {
-            if ($i <= 22 && $i <> 16) {
+            if ($i <= 23 && $i <> 16) {
                 $statobj = installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin, $saemail, $said, $sapw);
-            } elseif ($i == 16 || $i == 23) {
+            } elseif ($i == 16 || $i == 24) {
                 //Insert basic app settings
                 $statobj = installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin, $saemail, $said, $sapw, $settingsArr);
-            } elseif ($i == 24) {
+            } elseif ($i == 25) {
                 require "instcomposer.php";
             } else {
                 $refurl = urlencode($base_url."/admin/config.php");

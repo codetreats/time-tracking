@@ -71,6 +71,9 @@ class I18n
 
     public const COMMON_KEYWORD_STAFF = "Mitarbeiter";
     public const COMMON_KEYWORD_SHOW = "Anzeigen";
+
+    public const COMMON_KEYWORD_LOCK = "Festschreiben";
+    public const COMMON_KEYWORD_PLEASE_CHOICE = "Bitte wählen";
     public const COMMON_MONTH_OVERVIEW_NO_ENTRIES = "Keine Einträge für diesen Monat.";
     public const COMMON_MONTH_OVERVIEW_DATE = "Datum";
     public const COMMON_MONTH_OVERVIEW_START = "Start";
@@ -81,6 +84,7 @@ class I18n
 
     public const ERROR_ONLY_CURRENT_MONTH = "Es darf nur der aktuelle Monat verändert werden.";
     public const ERROR_OVERLAPPING_TRACKING = "Für diesen Zeitraum gibt es schon einen Eintrag.";
+    public const ERROR_LOCKED = "Monat ist bereits festgeschrieben.";
     public const PAGE_USER_TRACK_FORM_DATE = "Datum:";
     public const PAGE_USER_TRACK_FORM_START = "Startzeit (HH:MM):";
     public const PAGE_USER_TRACK_FORM_END = "Endzeit (HH:MM):";
@@ -90,7 +94,7 @@ class I18n
     public const PAGE_ACCOUNT_PAYMENT_HOURLY_FOR = "Neuer Stundenlohn für ";
 
     public const PAGE_ACCOUNT_PAYMENT_FORM_HOURLY = "Stundenlohn:";
-
+    public const PAGE_ACCOUNT_OVERVIEW_LOCKING_ROW = "Festschreibung";
     public const PAGE_REGISTER_HINT = "";
 
     public const PAGE_ACCOUNT_PAYMENT_FORM_SAVE = "Speichern";

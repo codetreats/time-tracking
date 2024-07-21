@@ -216,6 +216,19 @@ CREATE TABLE `tracking` (
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Table structure for table `checksums`
+--
+DROP TABLE IF EXISTS `checksums`;
+CREATE TABLE `checksums` (
+        id INT AUTO_INCREMENT,
+        created DATETIME NOT NULL,
+        year INT(4) NOT NULL,
+        month INT(2) NULL,
+        checksum char(150) NOT NULL,
+        PRIMARY KEY (`id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `member_jail`
 --
 CREATE TABLE `member_jail` (

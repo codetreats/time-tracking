@@ -23,3 +23,4 @@
     $tbl_role_permissions = $tbl_prefix."role_permissions";
     $tbl_tracking = $tbl_prefix."tracking";
     $tbl_payment = $tbl_prefix."payment";
+    $tbl_checksums = $tbl_prefix."checksums";
