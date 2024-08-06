@@ -195,7 +195,7 @@ CREATE TABLE `payment` (
       PRIMARY KEY (`id`),
       UNIQUE KEY `user_id_UNIQUE` (`user_id`),
       KEY `fk_userid_idx` (`user_id`),
-      CONSTRAINT `fk_userid_payment` FOREIGN KEY (`user_id`) REFERENCES {$tblprefix}members (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+      CONSTRAINT `fk_userid_payment` FOREIGN KEY (`user_id`) REFERENCES members (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -212,7 +212,7 @@ CREATE TABLE `tracking` (
       `description` VARCHAR(110) NOT NULL,
       PRIMARY KEY (`id`),
       KEY `fk_userid_idx` (`user_id`),
-      CONSTRAINT `fk_userid_tracking` FOREIGN KEY (`user_id`) REFERENCES {$tblprefix}members (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+      CONSTRAINT `fk_userid_tracking` FOREIGN KEY (`user_id`) REFERENCES members (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -225,6 +225,7 @@ CREATE TABLE `checksums` (
         year INT(4) NOT NULL,
         month INT(2) NULL,
         checksum char(150) NOT NULL,
+        reference TEXT,
         PRIMARY KEY (`id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

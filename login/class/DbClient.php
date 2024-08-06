@@ -45,15 +45,16 @@ class DbClient extends AppConfig
         }
     }
 
-    public function addChecksum(String $year, String $month, String $checksum) {
+    public function addChecksum(String $year, String $month, String $checksum, String $reference) {
         try {
-            $sql = "INSERT INTO $this->tbl_checksums (created, year, month, checksum) VALUES (:created, :year, :month, :checksum)";
+            $sql = "INSERT INTO $this->tbl_checksums (created, year, month, checksum, reference) VALUES (:created, :year, :month, :checksum, :reference)";
             $stmt = $this->conn->prepare($sql);
             $created = (new DateTime())->format('Y-m-d H:i:s');
             $stmt->bindParam(':created', $created);
             $stmt->bindParam(':year', $year, PDO::PARAM_INT);
             $stmt->bindParam(':month', $month, PDO::PARAM_INT);
             $stmt->bindParam(':checksum', $checksum, PDO::PARAM_STR);
+            $stmt->bindParam(':reference', $reference, PDO::PARAM_STR);
             $stmt->execute();
         } catch (PDOException $e) {
             echo "Fehler[addChecksum]: " . $e->getMessage();
@@ -64,10 +65,10 @@ class DbClient extends AppConfig
         $trackings = [];
         try {
             if ($user_id == null) {
-                $sql = "SELECT id, user_id, date, start, end, payment, description FROM $this->tbl_tracking ORDER BY date ASC, start ASC";
+                $sql = "SELECT id, user_id, date, start, end, payment, description FROM $this->tbl_tracking ORDER BY date ASC, start ASC, id ASC";
                 $stmt = $this->conn->prepare($sql);
             } else {
-                $sql = "SELECT id, user_id, date, start, end, payment, description FROM $this->tbl_tracking WHERE user_id = :user_id ORDER BY date ASC, start ASC";
+                $sql = "SELECT id, user_id, date, start, end, payment, description FROM $this->tbl_tracking WHERE user_id = :user_id ORDER BY date ASC, start ASC, id ASC";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->bindParam(':user_id', $user_id);
             }

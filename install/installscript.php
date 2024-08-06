@@ -736,6 +736,7 @@ function installDb($i, $dbhost, $dbname, $dbuser, $dbpw, $tblprefix, $superadmin
                         year INT(4) NOT NULL,
                         month INT(2) NULL,
                         checksum char(150) NOT NULL,
+                        reference TEXT,
                         PRIMARY KEY (`id`)
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
                     $conn->exec($sql);

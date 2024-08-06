@@ -1,4 +1,15 @@
 <?php
+
+function compareTrackings(\PHPLogin\TrackingData $t1, \PHPLogin\TrackingData $t2) : Int {
+    if ($t1->date != $t2->date) {
+        return strcmp($t1->date, $t2->date);
+    }
+    if ($t1->start != $t2->start) {
+        return strcmp($t1->start, $t2->start);
+    }
+    return $t1->id <=> $t2->id;
+};
+
 /**
  * PHPLogin\PageConstructor extends AppConfig
  */
@@ -21,9 +32,15 @@ class LockingManager extends AppConfig
 
     function lockMonth(String $year, String $month) {
         if ($this->isLockingPossible($year, $month)) {
-            $checksum = $this->calculateChecksumForMonth($year, $month);
-            $this->dbClient->addChecksum($year, $month, $checksum);
+            $reference = $this->calculateChecksumReferenceForMonth($year, $month);
+            $checksum = $this->getChecksum($reference);
+            $this->dbClient->addChecksum($year, $month, $checksum, $reference);
         }
+    }
+
+    function calculateChecksumForMonth(String $year, String $month) {
+        $reference = $this->calculateChecksumReferenceForMonth($year, $month);
+        return $this->getChecksum($reference);
     }
 
     function isLockingPossible(String $year, String $month) : bool {
@@ -46,16 +63,17 @@ class LockingManager extends AppConfig
         return $this->dbClient->getChecksum($year, $month);
     }
 
-    function calculateChecksumForMonth(String $year, String $month) : String {
+    function calculateChecksumReferenceForMonth(String $year, String $month) : String {
         $date = TrackingUtils::dateFromYearAndMonth($year, $month);
         $trackings = $this->monthOverview->getTrackingsOfMonth($date);
         if (strlen($month) == 1) {
             $month = "0" . $month;
         }
-        return $this->getChecksum("$year-$month", $trackings);
+        return $this->getChecksumReference("$year-$month", $trackings);
     }
 
-    private function getChecksum(string $header, array $trackings) : String {
+    private function getChecksumReference(string $header, array $trackings) : String {
+        usort($trackings, "compareTrackings");
         $string = $header . ";";
         foreach ($trackings as $tracking) {
             $string .= $tracking->id . ";";
@@ -66,7 +84,10 @@ class LockingManager extends AppConfig
             $string .= $tracking->description . ";";
             $string .= $tracking->payment . ";";
         }
-        $string = trim($string);
-        return hash('sha512', $string);
+        return trim($string);
+    }
+
+    private function getChecksum(string $reference) : String {
+           return hash('sha512', $reference);
     }
 }
