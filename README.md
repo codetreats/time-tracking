@@ -1,4 +1,4 @@
-# PHP-Login
+# Codetreats Time-Recording
 
 codetreats\time-recording is a simple tool for time recording in small componaies or organisations.
 
