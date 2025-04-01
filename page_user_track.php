@@ -79,11 +79,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $end = $_POST['end'] ?? $end;
         $description = $_POST['description'] ?? $description;
 
-        // Überprüfen, ob alle Felder ausgefüllt sind
-        $payment = $dbClient->getPayment($uid, AppConfig::pullSetting('default_payment'));
-
         if ($auth->isAdmin() && isset($_POST['user'])) {
             $user = $_POST['user'];
+            $payment = $dbClient->getPayment($user, AppConfig::pullSetting('default_payment'));
             $tracking = new TrackingData(-1, $user, $date, $start, $end, $description, $payment);
             if ($lockingManager->isLocked($tracking->getDate())) {
                 echo "<p class='error'>" . I18n::ERROR_LOCKED . "</p>";
@@ -93,6 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $dbClient->addTracking($tracking);
             }
         } else {
+            $payment = $dbClient->getPayment($uid, AppConfig::pullSetting('default_payment'));
             $tracking = new TrackingData(-1, $uid, $date, $start, $end, $description, $payment);
             if (!TrackingUtils::isInCurrentMonth($tracking->getDate())) {
                 echo "<p class='error'>" . I18n::ERROR_ONLY_CURRENT_MONTH . "</p>";
